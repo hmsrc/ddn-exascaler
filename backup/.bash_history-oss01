@@ -1,0 +1,17 @@
+pdsh -a uptime
+uptime
+ssh exsc2-mds00
+/opt/ddn/config/install -p
+es_mount --dry-run
+es_mount --dry-run --failover
+/opt/ddn/scripts/about_this_host.py 
+pdsh -a "/opt/ddn/scripts/about_this_host.py | grep runs" | dshbak -c
+pdsh -a "/opt/ddn/scripts/about_this_host.py | grep can" | dshbak -c
+pdsh -w exsc2-oss[00-01] "es_mount --dry-run | sort" | dshbak -c
+pdsh -w exsc2-oss[00-01] "es_mount --dry-run --failover | sort" | dshbak -c
+pdsh -a "service pacemaker stop"
+pdsh -a "service pacemaker stop &" &
+which ha_reset_cluster
+vim /opt/ddn/bin/ha_reset_cluster 
+sync-file /opt/ddn/bin/ha_reset_cluster 
+vim /etc/ddn/exascaler.conf 

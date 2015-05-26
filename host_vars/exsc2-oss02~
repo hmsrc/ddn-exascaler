@@ -1,0 +1,13 @@
+---
+primary_interface: eth4
+interfaces:
+  eth4:
+    name: eth4
+    mac: "F4:52:14:36:DB:B2"
+    ip: 10.117.24.46
+    netmask: 255.255.252.0
+    dns1: 10.0.64.3
+    dns2: 10.0.64.4
+    gateway: 10.0.64.1
+    protocol: none
+    onboot: "yes"

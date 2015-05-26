@@ -1,0 +1,455 @@
+ssh-keygen 
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorize_keys
+vim ~/.ssh/authorize_keys 
+/ls
+ls -lah
+pdsh -a uptime 
+lsscsi 
+ls
+vim tunefs_separate-commands.txt 
+/opt/ddn/config/config-hosts.py 
+vim /etc/ddn/exascaler.conf 
+route -n
+vim /etc/ddn/exascaler.conf 
+ifconfig
+vim /etc/ddn/exascaler.conf 
+ipmitool lan print
+vim /etc/ddn/exascaler.conf 
+hostname exsc2-mds00
+/opt/ddn/config/config-hosts.py 
+sync-file ~/.ssh
+cat /etc/machines 
+for host in $(cat /etc/machines); do rsync -Rav ~/.ssh/ $host:/; done
+pdsh -a uptime
+sync-file /etc/ddn/exascaler.conf 
+sync-file /etc/multipath.conf
+pdsh -a md5sum /etc/multipath.conf
+pdsh -a "lsscsi | wc -l"
+sync-file /etc/ddn/ddn-ibsrp.conf 
+pdsh -a "multipath -F"
+pdsh -a "service ddn-ibsrp stop"
+pdsh -a "service ddn-ibsrp start"
+sync-file /etc/ddn/exascaler.conf 
+md5sum /etc/ddn/exascaler.conf 
+pdsh -a md5sum /etc/ddn/exascaler.conf 
+vim /etc/ddn/exascaler.conf 
+bash
+cat /etc/machines 
+for host in $(cat /etc/machines); do ssh $host "hostname $host"; done
+for host in $(cat /etc/machines); do ssh $host "hostname"; done
+pdsh -a /opt/ddn/config/config-nics.py | dshbak -c
+sync-file /etc/infiniband/connectx.conf 
+pdsh -a md5sum /etc/infiniband/connectx.conf 
+pdsh -a "service ddn-ibsrp stop"
+pdsh -a "multipath -F"
+pdsh -a "service openibd stop"
+pdsh -a "service openibd start"
+pdsh -a "ibstat | grep layer" | dshbak -c
+ifup eth4
+pdsh -a /opt/ddn/config/config-nics.py | dshbak -c
+es_pingall 
+pdsh -a ifup eth4 | dshbak -c
+pdsh -a ifdown eth4
+pdsh -a ifup eth4
+es_pingall 
+ssh exsc2-mds01
+pdsh -a /opt/ddn/config/config-hosts.py 
+pdsh -a "es_pingall" | dshbak -c
+ifconfig
+pdsh -a route -n | dshbak -c
+pdsh -a uptime
+cat /etc/localtime 
+ls -lah  /etc/localtime 
+pdsh -a ln -fs /usr/share/zoneinfo/US/Eastern  /etc/localtime
+pdsh -a uptime
+ssh 10.117.24.23
+uptime
+sync-file /etc/ntp.conf 
+sync-file /etc/resolv.conf 
+pdsh -a "service ntpd restart"
+pdsh -a uptime
+cat /etc/ntp.conf 
+pdsh -a "service ntpd stop"
+ntpdate 
+ntpdate ntp1.med.harvard.edu
+ping  ntp1.med.harvard.edu
+ping  ntp.med.harvard.edu
+ping  ntp2.med.harvard.edu
+ping  ntp3.med.harvard.edu
+route -n
+cat /etc/resolv.conf 
+ping 10.1.64.1
+ntpdate 10.1.64.1
+pdsh -a ntpdate 10.1.64.1
+pdsh -a "hwclock --sys-hc"
+pdsh -a "hwclock --syshc"
+pdsh -a uptime
+ping orchestra.med.harvard.edu
+cat /etc/resolv.conf 
+ping 10.117.24.1
+vim ~/tunefs_separate-commands.txt 
+pdsh -a es_tunefs --dry-run | grep tunefs
+pdsh -a es_tunefs --dry-run | grep tunefs > tunefs_separate-commands.txt 
+vim tunefs_separate-commands.txt 
+multipath -ll
+pçdsh -a "service ddn-ibsrp start"
+es_pingall 
+pdsh -a "es_pingall " |dshbak -c
+pdsh -a /opt/ddn/config/lustre/config-modprobe.py 
+hostname
+service ddn-ibsrp start
+lsscsi 
+ibstat
+cat /etc/ddn/ddn-ibsrp.conf 
+lsscsi 
+pdsh -a "lsscsi | wc -l"
+ifconfig
+pdsh -a service ddn-ibsrp start
+pdsh -a "lsscsi | wc -l"
+multipath -ll
+pdsh -a "multipath -v2 | wc -l"
+pdsh -a "multipath -ll | wc -l"
+ls /dev/mapper/
+pdsh -a  /dev/mapper/*
+lvscan 
+vgchange -ay
+lvscan 
+pvscan 
+vgs
+lvs
+ls /dev/mapper/
+es_tunefs --dry-run
+ssh exsc-mds-01
+ssh exsc-mds01
+ssh exsc2-mds01
+pvscan 
+lvscan 
+lvs
+vgchange =ay
+vgchange -ay
+pdsh -a ls /dev/mapper/ost_scratch2_* | wc -l
+pdsh -a "ls /dev/mapper/ost_scratch2_* | wc -l"
+~/tunefs_separate-commands.txt 
+ for dev in /dev/mapper/ost_scratch2_*; do tunefs.lustre $dev | grep -e Param -e Target | sort | uniq; done
+ for dev in /dev/mapper/ost_scratch2_*; do tunefs.lustre $dev | grep -e Param -e Target | sort | uniq | xargs echo; done
+pdsh -a /opt/ddn/config/lustre/mkdirs 
+pdsh -a /opt/ddn/config/lustre/config-modprobe.py 
+pdsh -a "modprobe -v lustre"
+es_pingall --check-all
+pdsh -a -f1 "es_pingall --check-all" |dshbak -c
+pdsh -a "es_mount --abort-recovery --serial"
+es_pingall 
+lctl list_nids
+mount
+pdsh -a "mount -t lustre" | dshbak -c
+lctl conf_param scratch2-MDT0000.mdt.identity_upcall=NONE
+lvs
+cat /etc/fstab 
+cat /etc/hosts
+cat /etc/modprobe.d/lustre.conf 
+es_pingall 
+pdsh -a "es_pingall --check-all" | dshbak -c
+pdsh -f1 -a "es_pingall --check-all" | dshbak -c
+/opt/ddn/config/install -h
+/opt/ddn/config/install -p
+es_pingall 
+ssh exsc2-mds01
+ssh exsc2-oss00
+ssh exsc2-oss01
+ssh exsc2-oss02
+ssh exsc2-oss03
+ssh exsc2-oss04
+ssh exsc2-oss05
+/opt/ddn/config/corosync/config-corosync.py --gen-authkey
+sync-file /etc/corosync/authkey 
+vim /etc/sysconfig/pacemaker
+sync-file /etc/sysconfig/pacemaker
+pdsh -a rm -fv /etc/sysconfig/pacemaker.bak 
+pdsh -a md5sum /etc/sysconfig/pacemaker 
+pdsh -a md5sum /etc/sysconfig/pacemaker* 
+pdsh -a md5sum /etc/corosync/authkey 
+vim /etc/corosync/corosync.conf
+sync-file /etc/corosync/corosync.conf
+pdsh -a md5sum /etc/corosync/corosync.conf
+pdsh -a "service corosync start"
+pdsh -a corosync-cfgtool -s | dshbak -c
+pdsh -a "service pacemaker start"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+ssh exsc2-oss00
+sync-file ~/.ssh
+ssh exsc2-oss00
+ssh exsc2-oss02
+pdsh -a uptime
+pdsh -a /opt/ddn/config/corosync/config-corosync.py  | dshbak -c
+pdsh -a "multipath -ll | wc -l"
+pdsh -a "modprobe -v lustre"
+pdsh -f1 -a "es_pingall --check-all" | dshbak -c
+pdsh -a uptime
+pdsh -a "service corosync start"
+pdsh -a "service pacemaker start"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+ssh exsc2-oss04
+pdsh -a uptime
+vim /etc/ddn/exascaler.conf 
+pdsh -a uptime
+sync-file /etc/ddn/exascaler.conf 
+pdsh -a md5sum /etc/ddn/exascaler.conf 
+pdsh -a ha_reset_cluster 
+vim /etc/sysconfig/pacemaker 
+pdsh -a "modprobe -v lustre"
+pdsh -a -f1 "es_pingall --checkall" | dshbak -c
+pdsh -a -f1 "es_pingall --check-all" | dshbak -c
+pdsh -a /opt/ddn/config/corosync/config-corosync.py 
+vim /etc/corosync/corosync.conf
+pdsh -a md5sum /etc/corosync/corosync.conf
+pdsh -a "service corosync start"
+pdsh -a "service pacemaker start"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-stonith.py 
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-resources.py 
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/check-config.py 
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+cluster_resources manage
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+cluster_resources start
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a -f1 "es_pingall --check-all" | dshbak -c
+ssh admin@10.1.64.159
+ssh admin@10.1.64.160
+ssh admin@10.1.64.161
+ping 10.1.64.159
+ping 10.1.67.159
+ssh admin@10.1.67.159
+ibstat
+sminfo -C mlx4_0 -P2 
+pdsh -a sminfo -C mlx4_0 -P2 
+ifconfig
+df -h
+ssh user@10.1.66.58
+lctl list_nids
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+lctl ilst_nids
+lctl list_nids
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+netstat -i
+man netstat
+netstat -s
+netstat -s | grep -i -e failed -e retransmit -e bad -e error
+pdsh -a "netstat -s | grep -i -e failed -e retransmit -e bad -e error" | dshbak -c
+pdsh -a "netstat -s | grep -i -e failed -e retransmit -e bad -e error" | dshbak -c | column
+pdsh -a "netstat -s | grep -i -e failed -e retransmit -e bad -e error" | dshbak -c
+watch --interval=5 --difference 'pdsh -a "netstat -s | grep -i -e failed -e retransmit -e bad -e error" | dshbak -c'
+watch --interval=10 --difference 'pdsh -a "netstat -s | grep -i -e failed -e retransmit -e bad -e error" | dshbak -c'
+netstat -s
+netstat -s -z
+pdsh -a uptime
+pdsh -a uptime | dshbak -c
+cat /etc/modprobe.d/lustre.conf 
+pdsh -a cat /etc/modprobe.d/lustre.conf 
+pdsh -a cat /etc/modprobe.d/lustre.conf | dshbak -c
+pdsh -a -f1 "es_pingall --check-all" | dshbak -c
+pdsh -a "es_pingall --check-all" | dshbak -c
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+crm node standby exsc2-oss05
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+crm node online exsc2-oss05
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -h
+pdsh -q
+pdsh -L
+pdcp -g oss ~/tunefs_separate-commands.txt /tmp/
+ls -lah
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+cluster_resources cleanup
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+lctl list_nids
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+es_showall 
+mv es_lustre_showall_2015-04-01_232429.tar.bz2 Harvard-es_lustre_showall_2015-04-01_232429_amartinez.tar.bz2 
+ftp 67.23.7.119
+tar -tvf Harvard-es_lustre_showall_2015-04-01_232429_amartinez.tar.bz2 
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+crm resource cleanup pingd-o2ib1
+crm resource cleanup pingd-tcp
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+lctl conf_param scratch2.quota.ost=ug
+lctl conf_param scratch2.quota.mdt=ug
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+ssh user@10.1.66.58
+lctl list_nids
+pdsh -a "lctl list_nids |xargs echo" | sort
+es_pingall 
+echo 100 >  /proc/fs/lustre/lod/scratch2-MDT0000-mdtlov/qos_threshold_rr
+ssh exsc2-mds01
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+cluster_resources start
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+less /var//log/messages 
+date
+less /var//log/messages 
+mount
+pdsh -a "mount -t lustre" | dshabk -c
+pdsh -a "mount -t lustre" | dshbak -c
+pdsh -a "multipath -ll |wc -l"
+cluster_resources unmanage
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a "es_mount --abort-recovery"
+pdsh -a "es_mount --umount"
+pdsh -a "es_mount --abort-recovery"
+pdsh -a "es_mount --umount"
+pdsh -a "lustre_rmmod"
+pdsh -a mount
+pdsh -a "mount -t lustre
+pdsh -a "mount -t lustre"
+umount /lustre/scratch2/mdt/
+pdsh -a "lustre_rmmod"
+lctl net unconfigure
+mount
+vgchange -an
+pdsh -a vgchange -an
+lustre_rmmod 
+mount
+pdsh -a "lctl list_nids"
+ssh exsc2-mds01
+ipmitool lan print
+ssh exsc2-mds01
+shutdown -r now
+ssh user@10.1.66.58
+pdsh -a "ifup eth4"
+es_pingall 
+pdsh -a "modprobe -v lustre"
+pdsh -a lctl list_nids
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+cluster_resources start
+pdsh -a lustre_recovery_status.sh 
+pdsh -a "modprobe -v lustre"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+service corosync start
+service pacemaker start
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+es_pingall --check-all
+es_mount --abort-recovery
+ssh exsc2-mds01
+pdsh -g oss "es_mount --abort-recovery" 
+pdsh -a lustre_recovery_status.sh 
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a "mount -t lustre"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a "mount -t lustre" |dshbak -c
+ssh user@10.1.66.58
+dmesg
+ifconfig 
+ifconfig | less
+exit
+uptime 
+/sbin/ifconfig 
+exit
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a uptime
+pdsh -a "es_mount"
+pdsh -a "mount -t lustre" | dshbak -c
+es_pingall 
+pdsh -a -f1 "es_pingall --check-all"
+ping 10.0.66.101
+less /var//log/kern 
+dmesg 
+host 10.0.66.101
+host 10.0.65.220
+dmesg 
+host 10.0.66.195
+dmesg
+exit
+dmesg
+host 10.0.66.140
+exit
+cat .ssh/authorized_keys 
+vi .ssh/authorized_keys 
+exit
+dmesg
+exit
+vim netwatch.sh
+sync-file netwatch.sh 
+chmod +x netwatch.sh 
+sync-file netwatch.sh 
+ifconfig
+~/netwatch.sh eth4 2
+~/netwatch.sh 2 eth4
+~/netwatch.sh -h
+~/netwatch.sh 2s eth4
+pdsh -g oss ~/netwatch.sh 2s eth4
+pdsh -g oss ~/netwatch.sh 5s eth4
+pdsh -g oss ~/netwatch.sh 15s eth4
+cat /proc/meminfo 
+pdsh -g oss ~/netwatch.sh 15s eth4
+pdsh -g oss ~/netwatch.sh 20s eth4
+ssh user@10.1.66.58
+ls
+ls -alh
+cat anaconda-ks.cfg 
+ls
+ls /root/
+ls EXAScaler-2.1.1/
+ls /
+ls /opt/
+ls /opt/ddn/
+tree /opt/ddn/
+ls /opt/ddn/*
+es_showall 
+/opt/ddn/scripts/config_show.py 
+/opt/ddn/scripts/about_this_host.py 
+ls /opt/ddn/
+ls /opt/ddn/bin/
+cat /opt/ddn/bin/ior-test.sh 
+es_pingall 
+ls
+cat install.log
+cat install.log.syslog 
+ls
+ls /opt/ddn/
+ls /opt/ddn/config/
+cat /opt/ddn/config/install
+ls /opt/ddn/
+ls /opt/ddn/ddn-api/
+ls /opt/ddn/ddn-api/*
+ls /opt/ddn/e
+ls /opt/ddn/es/
+cat /opt/ddn/es/config_robinhood_db.py 
+ls
+ls /mnt/
+ls
+ls /
+ls /media/
+mount
+ls /home/
+ls /etc/
+cat /etc/yum.conf 
+ls /var/cache/yum/
+cat /var/cache/yum/timedhosts.txt 
+cat /etc/yum.repos.d/
+cat /etc/yum.repos.d/CentOS-Media.repo 
+ls /media/
+ls
+exit
+ifconfig
+exit
+cat /etc/redhat-release 
+exit
+ls
+history
+cat tunefs_separate-commands.txt
+exit
+ls -alh
+cat .bash_history 
+exit
+ls -alh
+ls .config/
+ls .config/crm/
+ls .ss
+ls .ssh/
+cat install.log
+cat tunefs_separate-commands.txt 
+exit
+ls -alh
+exit

@@ -1,0 +1,15 @@
+---
+- name: create system in cobbler
+  command: "cobbler system add 
+  	    --name={{ item }} 
+	    --profile={{ ddn_image_name }}
+	    --hostname={{ item }} 
+	    --mac={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['mac'] }} 
+	    --ip-address={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['ip'] }} 
+	    --interface={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['name'] }} 
+	    --kickstart={{ ddn_ks_path }}
+            creates=/var/lib/cobbler/config/systems.d/{{ item }}.json"
+  with_items: groups.exsc
+
+- name: sync changes for cobbler
+  command: cobbler sync

@@ -1,0 +1,13 @@
+---
+- name: configure cobbler for the exascaler
+  hosts: cobbler
+  user: root
+  roles:
+    - cobbler
+
+- name: install DDN and configure the exascaler
+  hosts: exsc
+  user: root
+  roles:
+    - mds
+    - oss

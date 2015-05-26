@@ -1,0 +1,54 @@
+/opt/ddn/config/install -p
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-stonith.py 
+vim /etc/ddn/exascaler.conf 
+cp -p /etc/ddn/exascaler.conf /tmp/
+sync-file /etc/ddn/exascaler.conf 
+dos2unix /etc/ddn/exascaler.conf 
+sync-file /etc/ddn/exascaler.conf 
+/opt/ddn/config/corosync/config-stonith.py 
+/opt/ddn/config/corosync/config-stonith.py 2> /tmp/crm_error.txt
+sed 's#\<#\r#g' /tmp/crm_error.txt 
+sed 's#<#\r#g' /tmp/crm_error.txt 
+less /tmp/crm_error.txt 
+sed 's#<#\\n#g' /tmp/crm_error.txt 
+dos2unix /tmp/crm_error.txt 
+sed 's#<#\\n#g' /tmp/crm_error.txt 
+less /tmp/ddn-cib.NSoVAt/stonith.cib 
+grep prim /tmp/ddn-cib.NSoVAt/stonith.cib 
+crm
+less /var//log/messages 
+lsof 
+lsof -i
+vim /etc/ddn/exascaler.conf 
+es_mount --dry-run
+es_mount --dry-run --failover
+ssh exsc2-oss01
+vim /etc/ddn/exascaler.conf 
+pdsh -a ha_reset_cluster  &
+vim /opt/ddn/bin/ha_reset_cluster 
+pdsh -a md5sum /opt/ddn/bin/ha_reset_cluster 
+lsof -i
+pdsh -a "pkill -HUP coro"
+pdsh -a "lsof -i" | dshbak -c
+pdsh -a "lsof -i" | dshbak -c | column
+pdsh -a uptime
+vim /etc/ssh/sshd_config 
+sync-file /etc/ssh/sshd_config 
+pdsh -a "service sshd restart"
+pdsh -a cat /etc/sysconfig/network | dshbak -c
+pdsh -a grep HOST /etc/sysconfig/network | sort
+md5sum /etc/ddn/exascaler.conf 
+pdsh -a md5sum /etc/ddn/exascaler.conf 
+vim /etc/ddn/exascaler.conf 
+sync-file /etc/ddn/exascaler.conf 
+pdsh -a md5sum /etc/ddn/exascaler.conf 
+pdsh -a /opt/ddn/config/corosync/config-corosync.py  | dshbak -c
+vim /etc/corosync/service.d/pcmk 
+pdsh -a ha_reset_cluster | dshbak -c
+pdsh -a /opt/ddn/config/corosync/config-corosync.py  | dshbak -c
+pdsh -a "service corosync start"
+pdsh -a  corosync-cfgtool -s | dshbak -c
+pdsh -a "service pacemaker start"
+pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+exit

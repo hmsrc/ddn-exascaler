@@ -1,0 +1,10 @@
+---
+primary_interface: eth0
+interfaces:
+  eth0:
+    name: eth0
+    mac: "C8:1F:66:EF:D7:A2"
+    ip: 10.0.64.126
+    netmask: 255.255.252.0
+    protocol: dhcp
+    onboot: "yes"

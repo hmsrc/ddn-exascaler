@@ -1,0 +1,16 @@
+/opt/ddn/config/install -p
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-stonith.py 
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+date;  pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-resources.py 
+date;  pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -
+cluster_resources manage
+pdsh -a "service pacemaker stop" &
+jobs
+vim /etc/ddn/exascaler.conf 
+sync-file /etc/ddn/exascaler.conf 
+jobs
+lustre_rmmod 
+pdsh -a lustre_rmmod 
+pdsh -a shutdown -r now; exit

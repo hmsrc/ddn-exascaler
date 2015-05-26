@@ -1,0 +1,2 @@
+/opt/ddn/config/install -p 
+pdsh -a uptime | sort

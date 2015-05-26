@@ -1,0 +1,56 @@
+ifconfig
+es_pingall 
+pvs
+vgs
+lvscan 
+pvscan 
+vgscan 
+/opt/ddn/config/install -p
+clear
+lctl list_nids
+lctl --help
+man lctl
+lctl list_nids
+echo 100 >  /proc/fs/lustre/lod/scratch2-MDT0000-mdtlov/qos_threshold_rr
+lctl list_nids
+lctl conn_list
+lctl --net tcp conn_list
+lctl --net tcp conn_list | awk '{print $1}' | sort | uniq 
+date; lctl --net tcp conn_list | awk '{print $1}' | sort | uniq  | wc -l
+while((1)); do date; lctl --net tcp conn_list | awk '{print $1}' | sort | uniq  | wc -l; sleep 60; done
+vim /etc/ddn/exascaler.conf 
+vim /etc/sysctl.conf 
+sync-file /etc/sysctl.conf 
+cluster_resources stop
+pdsh -a "lustre_rmmod"
+sysctl -p /etc/sysctl.conf 
+pdsh -a sysctl -p /etc/sysctl.conf 
+ifconfig
+pdsh -a ifdown eth4
+pdsh -a lustre_recovery_status.sh 
+ipmitool -e "&" -I lanplus -H 10.1.66.43 -U root -P calvin power status
+ipmitool -e "&" -I lanplus -H 10.1.66.43 -U root -P calvin power cycle
+pdsh -a "lustre_rmmod"
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+es_pingall 
+es_mount --abort-recovery
+ls
+shutdown -h now
+exit
+ls
+exit
+ifconfig
+ip addr list eth4
+exit
+ls
+dmesg
+exit
+uptime
+exit
+ifconfig 
+exit
+uptime
+exit
+ls
+exit
+reboot

@@ -1,0 +1,55 @@
+/opt/ddn/config/install -p
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a md5sum /etc/corosync/authkey 
+/opt/ddn/config/corosync/config-stonith.py 
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+/opt/ddn/config/corosync/config-resources.py 
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a "mount -t lustre" | dshbak -c
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+ssh exsc2-mds00
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+ibstat
+vim /etc/ddn/exascaler.conf 
+ifconfig
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+es_pingall 
+es_pingall --check-all
+route -n
+pdsh -a ping -c1 10.1.64.1
+pdsh -a "ping -c1 10.1.64.1  | grep transmit"
+vim /etc/resolv.conf 
+vim /etc/ntp.conf
+pdsh -a "service ntpd restart"
+pdsh -a uptime
+ping orchestra
+ping encore
+sync-file /etc/resolv.conf 
+sync-file /etc/ntp.conf 
+vim /etc/resolv.conf 
+vim /etc/ntp.conf 
+pdsh -a "service ntpd restart"
+"
+ pdsh -a "crm_mon -1rn | grep -v ^Last" | dshbak -c
+pdsh -a "service pacemaker stop"
+pdsh -a "ha_reset_cluster&" &
+jobs
+lsof -i
+pdsh -a "service pacemaker stop"
+pstree -Ghulps
+pstree -Ghulpa
+pdsh -a uptime
+jobs
+pdsh -a "pkil-9 l corosync"
+pdsh -a "pkil -9 l corosync"
+pdsh -a "pkil -9 |  corosync"
+pdsh -a "pkill -9 |  corosync"
+pdsh -a "pkill -9 corosync"
+pdsh -a "ha_reset_cluster" 
+pdsh -a "es_mount --umount"
+pdsh -a  lustre_rmmod
+pdsh -a  multipath -F
+pdsh -a vgchange -an
+pdsh -a  multipath -F
+pdsh -a  service ddn-ibsrp stop
+pdsh -a shutdown -r now

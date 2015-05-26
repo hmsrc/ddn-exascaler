@@ -1,0 +1,30 @@
+#
+# hosts
+#
+
+[cobbler]
+cobbler
+
+[exsc:children]
+exsc-mds
+exsc-oss
+
+[exsc-mds]
+exsc2-mds[00:01] ansible_ssh_pass=DDNSolutions4U
+
+[exsc-oss]
+exsc2-oss[00:05] ansible_ssh_pass=DDNSolutions4U
+
+#
+# management interfaces
+#
+
+[exsc-ipmi:children]
+exsc-mds-ipmi
+exsc-oss-ipmi
+
+[exsc-mds-ipmi]
+exsc2-mds[00:01]-ipmi.intranet.med.harvard.edu ansible_ssh_pass=calvin
+
+[exsc-oss-ipmi]
+exsc2-oss[00:05]-ipmi.intranet.med.harvard.edu ansible_ssh_pass=calvin

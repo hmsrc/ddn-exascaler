@@ -1,0 +1,15 @@
+---
+- name: create DDN iso mount point
+  file: path={{ ddn_iso_path_mnt }} state=directory owner=root group=root mode=0755
+
+- name: mount DDN iso
+  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro state=present
+
+- name: import DDN iso to cobbler
+  command: "cobbler import 
+  	    --name={{ ddn_image_name }}
+	    --path={{ ddn_iso_path_mnt }}
+	    --available-as={{ ddn_iso_path_web }}"
+
+#- name: unmount DDN iso
+#  mount: later
