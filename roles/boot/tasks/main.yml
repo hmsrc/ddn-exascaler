@@ -1,0 +1,3 @@
+---
+- include: preboot.yml tags=preboot
+- include: reboot.yml tags=reboot

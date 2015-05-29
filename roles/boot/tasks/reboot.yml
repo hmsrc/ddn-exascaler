@@ -1,0 +1,4 @@
+---
+- name: power cycling all mds and oss servers
+  command: "ipmitool -H {{ item }} -U root -P calvin chassis power cycle"
+  with_items: groups.exsc-ipmi
