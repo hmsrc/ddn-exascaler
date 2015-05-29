@@ -7,7 +7,7 @@
   with_items: groups.exsc
 
 - name: set PXE as first boot device on mds and oss servers
-  command: ipmitool -H {{ item }} -U root -P calvin chassis bootdev pxe
+  command: ipmitool -I lanplus -H {{ item }} -U root -P calvin chassis bootdev pxe
   with_items: groups['exsc-ipmi']
 
 - name: sync changes for cobbler if systems added
