@@ -1,8 +1,6 @@
 ---
 - name: confirm netboot is enabled for all mds and oss servers in cobbler
-  command: "cobbler system edit
-            --name={{ item }}
- 	    --netboot-enabled=true"
+  command: cobbler system edit --name={{ item }} --netboot-enabled=true
   register: result
   with_items: groups.exsc
 
