@@ -1,5 +1,5 @@
 ---
-- name: create system in cobbler
+- name: add mds and oss systems to cobbler inventory
   command: "cobbler system add 
   	    --name={{ item }} 
 	    --profile={{ ddn_image_name }}
@@ -9,7 +9,9 @@
 	    --interface={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['name'] }} 
 	    --kickstart={{ ddn_ks_path }}
             creates=/var/lib/cobbler/config/systems.d/{{ item }}.json"
+  register: result
   with_items: groups.exsc
 
-- name: sync changes for cobbler
+- name: sync changes for cobbler if systems added
   command: cobbler sync
+  when: result.changed
