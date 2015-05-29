@@ -1,15 +1,34 @@
 ---
-- name: create DDN iso mount point
-  file: path={{ ddn_iso_path_mnt }} state=directory owner=root group=root mode=0755
-
 - name: mount DDN iso
-  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro state=present
+  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=mounted
+
+- name: check if cobbler distro exists
+  command: cobbler distro list
+  register: result
+  failed_when: 
+    - "'{{ ddn_image_name }}' in result.stdout"
+  ignore_errors: true
+  no_log: true
+
+- name: remove existing image 
+  command: "cobbler distro remove 
+  	    --name {{ ddn_image_name }}
+	    --recursive"
+  when: result.failed
 
 - name: import DDN iso to cobbler
   command: "cobbler import 
   	    --name={{ ddn_image_name }}
+	    --arch=x86_64
 	    --path={{ ddn_iso_path_mnt }}
 	    --available-as={{ ddn_iso_path_web }}"
+  register: result
+  failed_when: 
+    - "'TASK COMPLETE' not in result.stdout"
 
-#- name: unmount DDN iso
-#  mount: later
+- name: unmount DDN iso
+  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=unmounted
+
+- name: sync changes for cobbler
+  command: cobbler sync
+  when: result.changed
