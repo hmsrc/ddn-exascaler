@@ -6,4 +6,4 @@ ddn_iso_path_web: http://cobbler.orchestra/centos/6.5/isos/x86_64/
 ddn_ks_path: /var/lib/cobbler/kickstarts/sfa12kx.ks
 
 # iso image name
-ddn_image_name: centos-6.5-sfa12kx-2.1.1-DVD-x86_64
+ddn_image_name: centos-6.5-sfa12kx-2.1.1-x86_64
