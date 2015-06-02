@@ -8,3 +8,12 @@ interfaces:
     netmask: 255.255.252.0
     protocol: dhcp
     onboot: "yes"
+  ib1:
+    name: ib1
+    ip: 172.16.64.123
+    netmask: 255.255.0.0
+    protocol: static
+    onboot: "no"
+  ipmi:
+    name: ipmi
+    ip: 10.1.66.50
