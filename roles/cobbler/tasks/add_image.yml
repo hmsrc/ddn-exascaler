@@ -1,28 +1,31 @@
 ---
-- name: mount DDN iso
-  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=mounted
-
 - name: check if cobbler distro exists
   command: cobbler distro list
   register: result
   failed_when: 
     - "'{{ ddn_image_name }}' in result.stdout"
-  ignore_errors: true
-  no_log: true
+  ignore_errors: True
+  no_log: True
+
+- name: prompt for removal of existing cobbler image
+  pause: prompt="Cobbler distro {{ ddn_image_name }} exists. Overwrite? Press any key to continue or <CTRL>-c, then a, to abort."
+  when: result.failed
 
 - name: remove existing image 
   command: cobbler distro remove --name {{ ddn_image_name }} --recursive
   when: result.failed
 
+- name: mount DDN iso
+  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=mounted
+
 - name: import DDN iso to cobbler
-  command: "cobbler import 
-  	    --name={{ ddn_image_name }}
-	    --arch=x86_64
-	    --path={{ ddn_iso_path_mnt }}
-	    --available-as={{ ddn_iso_path_web }}"
+  command: cobbler import --name={{ ddn_image_name }} --arch=x86_64 --path={{ ddn_iso_path_mnt }}
   register: result
   failed_when: 
     - "'TASK COMPLETE' not in result.stdout"
+
+- name: unmount DDN iso
+  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=unmounted
 
 - name: sync changes for cobbler
   command: cobbler sync

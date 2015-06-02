@@ -1,4 +1,10 @@
 ---
+- name: install DDN kickstart files in cobbler
+  template: src={{ item }}
+            dest=/var/lib/cobbler/kickstarts/{{ item }}
+            owner=root group=root mode=0644
+  with_items: ddn_ks_file
+
 - name: add mds and oss systems to cobbler inventory
   command: "cobbler system add 
   	    --name={{ item }} 
@@ -7,7 +13,7 @@
 	    --mac={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['mac'] }} 
 	    --ip-address={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['ip'] }} 
 	    --interface={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['name'] }} 
-	    --kickstart={{ ddn_ks_path }}
+	    --kickstart=/var/lib/cobbler/kickstarts/{{ ddn_ks_file }}
             creates=/var/lib/cobbler/config/systems.d/{{ item }}.json"
   register: result
   with_items: groups.exsc
