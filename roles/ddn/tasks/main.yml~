@@ -1,7 +1,0 @@
----
-- install exascaler.conf file
-  template: src={{ item }}
-            dest=/etc/ddn/{{ item }}
-            owner=root group=root mode=0644
-  with_items: 
-    - 'exascaler.conf'
