@@ -15,5 +15,6 @@
   hosts: exsc
   tags: exascaler
   roles:
+    - ddn
     - mds
     - oss
