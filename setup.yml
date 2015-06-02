@@ -2,21 +2,18 @@
 - name: configure cobbler for the exascaler
   hosts: cobbler
   tags: cobbler
-  user: root
   roles:
     - cobbler
 
 - name: configure boot settings on mds and oss before install
   hosts: cobbler
   tags: boot
-  user: root
   roles:
     - boot
 
 - name: install DDN and configure the exascaler
   hosts: exsc
   tags: exascaler
-  user: root
   roles:
     - mds
     - oss
