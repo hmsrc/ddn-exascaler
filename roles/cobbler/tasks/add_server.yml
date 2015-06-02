@@ -10,9 +10,9 @@
   	    --name={{ item }} 
 	    --profile={{ ddn_image_name }}
 	    --hostname={{ item }} 
-	    --mac={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['mac'] }} 
-	    --ip-address={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['ip'] }} 
-	    --interface={{ hostvars[item]['interfaces'][hostvars[item]['primary_interface']]['name'] }} 
+	    --mac={{ hostvars[item]['interfaces'][hostvars[item].primary_interface].mac }} 
+	    --ip-address={{ hostvars[item]['interfaces'][hostvars[item].primary_interface].ip }} 
+	    --interface={{ hostvars[item]['interfaces'][hostvars[item].primary_interface].name }} 
 	    --kickstart=/var/lib/cobbler/kickstarts/{{ ddn_ks_file }}
             creates=/var/lib/cobbler/config/systems.d/{{ item }}.json"
   register: result
