@@ -11,9 +11,7 @@
   no_log: true
 
 - name: remove existing image 
-  command: "cobbler distro remove 
-  	    --name {{ ddn_image_name }}
-	    --recursive"
+  command: cobbler distro remove --name {{ ddn_image_name }} --recursive
   when: result.failed
 
 - name: import DDN iso to cobbler
@@ -25,9 +23,6 @@
   register: result
   failed_when: 
     - "'TASK COMPLETE' not in result.stdout"
-
-- name: unmount DDN iso
-  mount: name={{ ddn_iso_path_mnt }} src={{ ddn_iso_path }} fstype=iso9660 opts=ro,loop state=unmounted
 
 - name: sync changes for cobbler
   command: cobbler sync

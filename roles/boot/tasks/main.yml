@@ -1,3 +1,29 @@
 ---
-- include: preboot.yml tags=preboot
-- include: reboot.yml tags=reboot
+- name: confirm netboot is enabled for all mds and oss servers in cobbler
+  command: cobbler system edit --name={{ item }} --netboot-enabled=true
+  register: result
+  with_items: groups.exsc
+
+- name: sync changes for cobbler if systems added
+  command: cobbler sync
+  when: result.changed
+
+- name: ensure ipmitool package is installed
+  tags: pxe
+  yum: name={{ item }} state=present
+  with_items:
+    - ipmitool
+
+- name: set PXE as first boot device on mds and oss servers
+  tags: pxe
+  command: ipmitool -I lanplus -H {{ item }} -U root -P calvin chassis bootdev pxe
+  with_items: groups['exsc-ipmi']
+
+- name: verify reboot of all mds and oss servers
+  tags: pxe
+  pause: prompt="You are about to power cycle (and re-image) all the mds and oss servers. Press any key to continue or <CTRL>-c, then a, to abort."
+
+- name: power cycling all mds and oss servers
+  tags: pxe
+  command: ipmitool -I lanplus -H {{ item }} -U root -P calvin chassis power cycle
+  with_items: groups.exsc-ipmi
