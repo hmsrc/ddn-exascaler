@@ -1,6 +1,8 @@
 ---
 ddn_image_name: centos-6.5-sfa12kx-2.1.1-x86_64
 ddn_ks_file: sfa12kx.ks
+lustre_fs_export: scratch2
+ost_count: 39
 
 # paths on cobbler server
 ddn_iso_path: /var/www/centos/6.5/isos/x86_64/CentOS-6.5-SFA12KX-2.1.1-x86_64-DVD.iso
