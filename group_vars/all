@@ -40,3 +40,8 @@ sysctl_parameters:
     value: '4096 524288 1048576'
   - name: net.core.wmem_max
     value: '524288'
+
+lustre_parameters:
+  - "scratch2-MDT0000.mdt.identity_upcall=NONE"
+  - "scratch2.quota.ost=ug"
+  - "scratch2.quota.mdt=ug"
