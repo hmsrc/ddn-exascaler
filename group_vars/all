@@ -8,3 +8,35 @@ ost_count: 39
 ddn_iso_path: /var/www/centos/6.5/isos/x86_64/CentOS-6.5-SFA12KX-2.1.1-x86_64-DVD.iso
 ddn_iso_path_mnt: /mnt/sfa12kx
 ddn_iso_path_web: http://cobbler.orchestra/cblr/links/centos-6.5-sfa12kx-2.1.1-x86_64
+
+sysctl_parameters:
+  - name: net.ipv4.tcp_timestamps
+    value: '1'
+  - name: net.ipv4.tcp_sack
+    value: '1'
+  - name: net.ipv4.tcp_dsack
+    value: '1'
+  - name: net.ipv4.tcp_low_latency
+    value: '0'
+  - name: net.core.netdev_max_backlog
+    value: '250000'
+  - name: net.ipv4.tcp_no_metrics_save
+    value: '1'
+  - name: net.ipv4.tcp_window_scaling
+    value: '0'
+  - name: net.core.optmem_max
+    value: '16777216'
+  - name: net.ipv4.tcp_mem
+    value: '4096 87380 16777216'
+  - name: net.core.rmem_default
+    value: '16777216'
+  - name: net.core.rmem_max
+    value: '16777216'
+  - name: net.ipv4.tcp_rmem
+    value: '4096 87380 16777216'
+  - name: net.core.wmem_default
+    value: '524288'
+  - name: net.ipv4.tcp_wmem
+    value: '4096 524288 1048576'
+  - name: net.core.wmem_max
+    value: '524288'
