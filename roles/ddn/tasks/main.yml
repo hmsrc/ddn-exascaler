@@ -14,25 +14,67 @@
   with_items: sysctl_parameters
   when: sysctl_parameters is defined
 
+#- name: install /etc/sysconfig/network-scripts/ifcfg-*
+#  tags: network
+#  template: src=ifcfg
+#            dest=/etc/sysconfig/network-scripts/ifcfg-{{ item.value.name }}
+#            owner=root group=root mode=0644
+#  register: result
+#  with_dict: interfaces
+#  when: interfaces is defined
 
-
-- name: configure ntp | remove existing localtime 
-  tags: ntp
-  file: path=/etc/localtime state=absent 
-
-- name: configure ntp | set Eastern time
-  tags: ntp
-  file: path=/etc/localtime 
-        src=/usr/share/zoneinfo/US/Eastern 
-        state=link 
-        force=yes
-
-- name: configure ntp | template /etc/ntp.conf
-  tags: ntp
-  template: src=ntp.conf.j2 dest=/etc/ntp.conf owner=root group=root mode=0444
+- name: run DDN script | config-nics.py | setup /etc/sysconfig/network-scripts/ifcfg-*
+  command: /opt/ddn/config/config-nics.py
   register: result
 
-- name: configure ntp | reload ntpd service
-  tags: ntp
-  service: name=ntpd state=restarted enabled=yes
+- name: reload network service
+  service: name=network state=reloaded enabled=yes
+  when: result.changed
+
+- name: install multipath.conf file
+  copy: src=multipath.conf
+        dest=/etc/multipath.conf
+        owner=root group=root mode=0644
+
+- name: flush all multipath device maps
+  command: multipath -F
+
+- name: install ddn-ibsrp.conf file
+  copy: src=ddn-ibsrp.conf
+        dest=/etc/ddn/ddn-ibsrp.conf
+        owner=root group=root mode=0644
+
+- name: install connectx.conf file
+  copy: src=connectx.conf
+        dest=/etc/infiniband/connectx.conf
+        owner=root group=root mode=0644
+
+- name: restart ddn-ibsrp service
+  service: name=ddn-ibsrp state=restarted enabled=yes
+
+#- name: restart openibd service
+#  service: name=openibd state=restarted enabled=yes
+
+
+
+
+- name: run DDN script | mkdirs | create directories
+  command: /opt/ddn/config/lustre/mkdirs 
+
+- name: run DDN script | config-modprobe.py | configure lustre.conf
+  command: /opt/ddn/config/lustre/config-modprobe.py
+
+- name: unload lustre modules
+  modprobe: name=lustre state=absent
+
+- name: load lustre modules
+  modprobe: name=lustre state=present
+
+- name: modify lustre parameters
+  tags: lctl
+  command: lctl conf_param {{ item }}
+  with_items: lustre_parameters
+  when: lustre_parameters is defined
+
+- include: ntp.yml tags=ntp
 

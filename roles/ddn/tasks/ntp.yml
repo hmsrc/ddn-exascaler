@@ -1,0 +1,15 @@
+---
+- name: configure ntp | remove existing localtime
+  file: path=/etc/localtime state=absent
+
+- name: configure ntp | set Eastern time
+  file: path=/etc/localtime
+        src=/usr/share/zoneinfo/US/Eastern
+        state=link
+        force=yes
+
+- name: configure ntp | template /etc/ntp.conf
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf owner=root group=root mode=0444
+
+- name: configure ntp | restart ntpd service
+  service: name=ntpd state=restarted enabled=yes
