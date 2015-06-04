@@ -12,8 +12,9 @@ interfaces:
     name: ib1
     ip: 172.16.64.129
     netmask: 255.255.0.0
-    protocol: static
-    onboot: "no"
+    protocol: none
+    onboot: "yes"
+oob:
   ipmi:
     name: ipmi
     ip: 10.1.66.56
