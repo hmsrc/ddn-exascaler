@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+{% for route in item.value.routes %}
+ADDRESS{{ loop.index0 }}={{ route.network }}
+NETMASK{{ loop.index0 }}={{ route.netmask }}
+GATEWAY{{ loop.index0 }}={{ route.gateway }}
+{% endfor %}

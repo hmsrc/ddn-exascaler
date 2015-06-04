@@ -1,0 +1,39 @@
+# {{ ansible_managed }}
+DEVICE={{ item.value.name }}
+{% if item.value.type is defined %}
+TYPE={{ item.value.type }}
+{% if item.value.type == 'Bridge' %}
+DELAY=0
+{% endif %}
+{% endif %}
+BOOTPROTO={{ item.value.protocol }}
+{% if item.value.protocol == 'none' %}
+{% if item.value.bridge is defined %}
+BRIDGE={{ item.value.bridge }}
+{% elif item.value.ip is defined %}
+IPADDR={{ item.value.ip }}
+NETMASK={{ item.value.netmask }}
+{% if item.value.dns1 is defined %}
+DNS1={{ item.value.dns1 }}
+{% endif %}
+{% if item.value.dns2 is defined %}
+DNS2={{ item.value.dns2 }}
+{% endif %}
+{% if item.value.gateway is defined %}
+GATEWAY={{ item.value.gateway }}
+{% endif %}
+{% endif %}
+{% endif %}
+{% if item.value.vlan is defined %}
+VLAN={{ item.value.vlan }}
+{% endif %}
+{% if item.value.broadcast is defined %}
+BROADCAST={{ item.value.broadcast }}
+{% endif %}
+{% if item.value.network is defined %}
+NETWORK={{ item.value.network }}
+{% endif %}
+ONBOOT={{ item.value.onboot }}
+{% if item.value.mtu is defined %}
+MTU={{ item.value.mtu }}
+{% endif %}
