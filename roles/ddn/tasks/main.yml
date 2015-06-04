@@ -1,7 +1,38 @@
 ---
 - name: install exascaler.conf file
-  template: src={{ item }}
-            dest=/etc/ddn/{{ item }}
+  template: src=exascaler.conf.j2
+            dest=/etc/ddn/exascaler.conf
             owner=root group=root mode=0644
-  with_items: 
-    - "exascaler.conf"
+
+- name: run DDN script | config-hosts.py | setup /etc/hosts, dsh groups, and /etc/machines
+  command: /opt/ddn/config/config-hosts.py
+
+- name: modify kernel parameters | configure /etc/sysctl.conf
+  tags: sysctl
+  sysctl: name='{{ item.name }}' value='{{ item.value }}'
+          state=present sysctl_set=yes ignoreerrors=yes
+  with_items: sysctl_parameters
+  when: sysctl_parameters is defined
+
+
+
+- name: configure ntp | remove existing localtime 
+  tags: ntp
+  file: path=/etc/localtime state=absent 
+
+- name: configure ntp | set Eastern time
+  tags: ntp
+  file: path=/etc/localtime 
+        src=/usr/share/zoneinfo/US/Eastern 
+        state=link 
+        force=yes
+
+- name: configure ntp | template /etc/ntp.conf
+  tags: ntp
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf owner=root group=root mode=0444
+  register: result
+
+- name: configure ntp | reload ntpd service
+  tags: ntp
+  service: name=ntpd state=restarted enabled=yes
+
