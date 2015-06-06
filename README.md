@@ -5,9 +5,8 @@ Notes:
 
 * The DVD from DDN is the sfa12kx-2.1.1 release (a CentOS-6.5 variant).
 * The playbooks work on the assumption that you're using cobbler to manage and pxe boot your systems and running CentOS-6.5.
-* 
 * I grabbed all system files of interest including configuration, kickstart, and `.bash_histories` before doing any work. I placed them in the `backup` folder of the repo for future reference.
-* **The exascaler role past the `exascaler.conf` step should be a replacement for running `/opt/ddn/config/install` but it isn't there yet.** I've commented out most of i
+* **The exascaler role past the `exascaler.conf` step should be a replacement for running `/opt/ddn/config/install` but it isn't there yet.**
 
 General instructions:
 
