@@ -5,7 +5,7 @@
 
 [global]
 fs_list: {{ lustre_fs_export }}
-sfa_list: 10.1.66.58 10.1.66.59
+sfa_list: {{ groups['controller'] | join (" ") }}
 pingd: yes
 
 [sysctl_defaults]
@@ -100,7 +100,7 @@ peers: {{ groups['exsc-oss'][loop.index-2] }}
 eth0_ip: {{ hostvars[host].interfaces.eth0.ip }}
 ib1_ip: {{ hostvars[host].interfaces.ib1.ip }}
 ipmi_ip: {{ hostvars[host].oob.ipmi.ip }}
-{{ lustre_fs_export }}_osts: {% for ost in range(loop.index-1, ost_count+1, groups['exsc-oss'] | length) %}{{ ost }} {% endfor %}
+{{ lustre_fs_export }}_osts: {% for ost in range(loop.index-1, ost_count, groups['exsc-oss'] | length) %}{{ ost }} {% endfor %}
 
 
 {% endfor %}
