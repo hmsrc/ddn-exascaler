@@ -3,8 +3,7 @@ Ansible playbooks to deploy a DDN [EXAScaler](http://www.ddn.com/products/lustre
 
 The DVD from DDN is based off of CentOS-6.5 using their sfa12kx-2.1.1 release. The playbooks work on the assumption that you're using cobbler to manage and pxe boot your systems and running CentOS.
 
-Notes:
-* **The exascaler role past the `exascaler.conf` step should be a replacement for running `/opt/ddn/config/install` but it isn't there yet.** I've commented out most of i
+**The exascaler role past the `exascaler.conf` step should be a replacement for running `/opt/ddn/config/install` but it isn't there yet.** I've commented out most of i
 
 1. Define your MDS and OSS servers as `host_vars` files.
 2. Confirm the `group_vars` variables are accurate.
